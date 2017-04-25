@@ -57,11 +57,8 @@ class Board {
     }
     
     func makeMove(row: Int, col: Int) {
-        // check for illegal move!!
-        if true {
-            self.fields[row][col] = self.current
-            self.current = self.getOpponent()
-        }
+        self.fields[row][col] = self.current
+        self.current = self.getOpponent()
     }
     
     func hasWon(player: Int) -> Bool {

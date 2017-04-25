@@ -11,6 +11,15 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    // difficulty
+    enum Difficulty {
+        case random
+        case smart
+        case ai
+    }
+    var difficultyDict = [Difficulty.random : "RANDOM", Difficulty.smart : "SMART", Difficulty.ai : "PERFECT"]
+    var level = Difficulty.random
+    
     // nodes
     var label = SKLabelNode()
     var leftLine = SKShapeNode()
@@ -53,10 +62,10 @@ class GameScene: SKScene {
         }
         
         // game label
-        gameLabel = SKLabelNode(text: "")
+        gameLabel = SKLabelNode(text: self.difficultyDict[self.level])
         gameLabel.position = CGPoint(x: 0, y: 0.275 * self.size.height)
         gameLabel.fontSize = 40
-        gameLabel.fontName = "Futura-CondesedMedium"
+        gameLabel.fontName = "Futura-CondensedMedium"
         gameLabel.fontColor = UIColor.lightGray
         self.addChild(gameLabel)
         
@@ -122,17 +131,26 @@ class GameScene: SKScene {
         }
     }
     
+    // ***********************
+    // **** Game behavior ****
+    // ***********************
+    
     func startGame() {
         // set up game logic
         board = Board()
         player = HumanPlayer(name: "human")
-//        cpu = RandomPlayer(name: "random")
-        cpu = SmarterPlayer(name: "smarter")
+        switch level {
+        case .random:
+            cpu = RandomPlayer(name: "random")
+        case .smart:
+            cpu = SmartPlayer(name: "smart")
+        case .ai:
+            cpu = SmarterPlayer(name: "smarter")
+        }
         playerToMove = true
     }
     
     func checkGame() {
-        self.board.printBoard()
         // check if game is over. if cpu is to move, then make that move. otherwise, wait for player move.
         if self.board.isOver() {
             gameOver()
@@ -162,7 +180,7 @@ class GameScene: SKScene {
             e.removeFromParent()
         }
         self.elements.removeAll()
-        gameLabel.text = ""
+        gameLabel.text = difficultyDict[self.level]
     }
     
     func cpuMove() {
@@ -173,6 +191,10 @@ class GameScene: SKScene {
         playerToMove = true
         checkGame()
     }
+    
+    // ***********************
+    // *** Game appearance ***
+    // ***********************
     
     func makeCircle(row: Int, col: Int) {
         // make opponent move (circle)
@@ -202,12 +224,23 @@ class GameScene: SKScene {
             // start node
             if touchedNodes.contains(label) {
                 if label.text == "START" {
-                    label.text = "RESTART"
+                    label.text = "CLEAR"
                     startGame()
-                } else if label.text == "RESTART" {
+                } else if label.text == "CLEAR" {
+                    label.text = "START"
                     cleanupGame()
-                    startGame()
                 }
+            }
+            // game label
+            if touchedNodes.contains(gameLabel) {
+                if self.level == .random {
+                    self.level = .smart
+                } else if self.level == .smart {
+                    self.level = .ai
+                } else {
+                    self.level = .random
+                }
+                self.gameLabel.text = self.difficultyDict[self.level]
             }
             // fields
             for i in 0...2 {
