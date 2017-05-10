@@ -30,6 +30,7 @@
 		B0171D0B1EAF188B001DE782 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0171D0E1EAF188B001DE782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0171D101EAF188B001DE782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0B5C9AC1EC1B85F00F33BFA /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		B0C7022E1EAF34C6003211C0 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		B0C702301EAF47EE003211C0 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,6 +71,7 @@
 				B0171D001EAF188B001DE782 /* GameScene.sks */,
 				B0171D021EAF188B001DE782 /* Actions.sks */,
 				B0171D041EAF188B001DE782 /* GameScene.swift */,
+				B0B5C9AC1EC1B85F00F33BFA /* MyPlayground.playground */,
 				B0171D061EAF188B001DE782 /* GameViewController.swift */,
 				B0171D081EAF188B001DE782 /* Main.storyboard */,
 				B0171D0B1EAF188B001DE782 /* Assets.xcassets */,
