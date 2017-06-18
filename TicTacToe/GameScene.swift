@@ -44,6 +44,46 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         // initially setup the scene
         setupScene()
+        // check if this is the first launch
+        if true {
+//        if UserDefaults.standard.object(forKey: "hasLaunchedBefore") == nil {
+            UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
+            UserDefaults.standard.synchronize()
+            initialLaunch()
+        }
+    }
+    
+    func initialLaunch() {
+        let onboardingLabel = SKLabelNode(fontNamed: "Futura-CondensedMedium")
+        onboardingLabel.position = CGPoint(x: 0, y: 0)
+        onboardingLabel.fontColor = UIColor.white
+        onboardingLabel.fontSize = 60
+        self.addChild(onboardingLabel)
+        
+        let hideBoardAction = SKAction.run {
+            self.outerRectangle.isHidden = true
+            onboardingLabel.text = "WELCOME TO TIC TAC TOE."
+        }
+        let difficultyAction = SKAction.run {
+            self.gameLabel.fontColor = UIColor.red
+            onboardingLabel.text = "Tap to change the difficulty.".uppercased()
+        }
+        let startAction = SKAction.run {
+            self.gameLabel.fontColor = UIColor.lightGray
+            self.label.fontColor = UIColor.red
+            onboardingLabel.text = "Tap to start the game.".uppercased()
+        }
+        let enjoyAction = SKAction.run {
+            self.label.fontColor = UIColor.black
+            onboardingLabel.text = "Enjoy playing!".uppercased()
+        }
+        let doneAction = SKAction.run {
+            onboardingLabel.removeFromParent()
+            self.outerRectangle.isHidden = false
+        }
+        let waitAction = SKAction.wait(forDuration: 2.5)
+        let onboardingAction = SKAction.sequence([hideBoardAction, waitAction, difficultyAction, waitAction, startAction, waitAction, enjoyAction, waitAction, doneAction])
+        self.run(onboardingAction)
     }
     
     func setupScene() {
